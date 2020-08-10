@@ -8,8 +8,8 @@ services:
     container_name: website-web-flores
     image: website-web
     ports:
-      - 9000:80
-      - 9000:81
+      - 8004:80
+      - 8005:81
     links:
       - website-db
     env_file:
