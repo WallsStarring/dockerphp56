@@ -5,11 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: website-web-cruz-del-sur
+    container_name: website-web-san-roman
     image: website-web
     ports:
-      - 8006:80
-      - 8007:81
+      - 8008:80
+      - 8009:81
     links:
       - website-db
     env_file:
@@ -19,7 +19,7 @@ services:
   website-db:
     restart: always
     image: mysql:5.7
-    container_name: website-db-cruz-del-sur
+    container_name: website-db-san-roman
     #ports:
     #  - 3306:3306
     env_file:
