@@ -1,0 +1,30 @@
+version: '3'
+services:
+  website:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: website-web
+    image: website-web
+    ports:
+      - 8000:80
+      - 8001:81
+    links:
+      - website-db
+    env_file:
+      - .env.db
+    volumes: 
+      - ./web:/var/www/html/website
+  website-db:
+    restart: always
+    image: mysql:5.7
+    container_name: website-db
+    #ports:
+    #  - 3306:3306
+    env_file:
+      - .env.db
+    volumes:
+      - db:/var/lib/mysql
+volumes:
+    db:

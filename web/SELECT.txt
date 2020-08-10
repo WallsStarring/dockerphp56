@@ -1,0 +1,366 @@
+**08:37:25/7/8/2020*****
+select codigo, codusu  from tblws_keys where '5JNIuHIUH$7898UH768buhk.IHI98yHKLJO8J.Oih7HO.J97UIHKH765F$%n' =  CONVERT(VARCHAR(MAX), DECRYPTBYPASSPHRASE('password', Llave)) and level = 1
+*************************************************************
+**08:37:25/7/8/2020*****
+select 
+      a.via_id as itinerarioID
+      , a.rut_id as rutaID
+      , e.id as origenID
+      , e.descripcion as origen
+      , h.id as destinoID
+      , h.descripcion as destino
+      , 1 as piso,j.cat_id as servicioID
+      , j.cat_nombre as servicioNombre
+      , a.via_precio1 as tarifa
+      , convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', a.via_horaviaje)+DATEDIFF(S,'00:00:00', b.rut_tiempoviaje),'00:00:00' ) as time(1))) as horaLlegada 
+      , cast(a.via_fechaviaje AS date) AS fechaPartida
+      , CAST(dateadd(day, datediff(day,'19000101',a.via_fechaviaje), CAST(a.via_horaviaje as datetime)) + CAST(b.rut_tiempoviaje as datetime) as date) as fechaLlegada
+      , a.lem_iddesembarque as agenciaLlegadaID
+      , f.nod_descripcion as agenciaLlegada
+      , m.lem_descripcion as direccionLlegada
+      , l.lem_id as agenciaPartidaID
+      , c.nod_descripcion as agenciaPartida
+      , convert(varchar(8), cast(a.via_horaviaje AS time)) AS horaPartida
+      , l.lem_descripcion as direccion 
+      from dbo.tblviajes_via a 
+     inner join dbo.tblrutas_rut b on a.rut_id = b.rut_id 
+     inner join dbo.tblnodos_nod c on b.nod_codigoorigen = c.nod_codigo 
+     inner join dbo.tblubigeos_ubi d on c.ubi_codigo = d.ubi_codigo
+     inner join dbo.tblciudades_ubi e on d.ubi_codigociudad = e.id
+    inner join dbo.tblnodos_nod f on b.nod_codigodestino = f.nod_codigo
+     inner join dbo.tblubigeos_ubi g on  f.ubi_codigo = g.ubi_codigo
+     inner join dbo.tblciudades_ubi h on  g.ubi_codigociudad = h.id
+     inner join dbo.tblvehiculos_veh i on  a.veh_id = i.veh_id
+     inner join dbo.tblcategorias_cat j on i.cat_id = j.cat_id
+     inner join dbo.tblviajeslugarembarque_vle k on a.via_id = k.via_id 
+     inner join  dbo.tbllugarembarque_lem l on l.lem_id = k.lem_id and l.nod_codigo = b.nod_codigoorigen
+     inner join dbo.tbllugarembarque_lem m on a.lem_iddesembarque = m.lem_id
+            where 
+            a.evi_codigo = 'PEN'
+            and a.via_ventasinternet = 1
+            and a.cat_id != 7
+            and a.via_fechaviaje = '08-08-2020'
+    
+       union all
+            select  
+            a.via_id as itinerarioID
+            , a.rut_id as rutaID
+            , e.id as origenID
+            , e.descripcion as origen
+            , h.id as destinoID
+            , h.descripcion as destino
+            , i.veh_pisos as piso
+            , j.cat_id as servicioID 
+            , j.cat_nombre as servicioNombre
+            , a.via_precio2 as tarifa
+            , convert(varchar(8) , cast (DATEADD(S,DATEDIFF(S,'00:00:00', a.via_horaviaje)+DATEDIFF(S,'00:00:00', b.rut_tiempoviaje),'00:00:00' ) as time(1))) as horaLlegada 
+            , cast(a.via_fechaviaje AS date) AS fechaPartida
+            , CAST(dateadd(day, datediff(day,'19000101',a.via_fechaviaje), CAST(a.via_horaviaje as datetime)) + CAST(b.rut_tiempoviaje as datetime) as date) as fechaLlegada
+            , a.lem_iddesembarque as agenciaLlegadaID, f.nod_descripcion as agenciaLlegada
+            , m.lem_descripcion as direccionLlegada
+            , l.lem_id as agenciaPartidaID
+            , c.nod_descripcion as agenciaPartida 
+            , convert(varchar(8),cast(a.via_horaviaje AS time)) AS horaPartida
+            , l.lem_descripcion as direccion 
+            from dbo.tblviajes_via a  
+         inner join dbo.tblrutas_rut b on  a.rut_id = b.rut_id
+         inner join dbo.tblnodos_nod c on b.nod_codigoorigen = c.nod_codigo
+         inner join dbo.tblubigeos_ubi d on c.ubi_codigo = d.ubi_codigo
+         inner join dbo.tblciudades_ubi e on d.ubi_codigociudad = e.id
+      inner join dbo.tblnodos_nod f on b.nod_codigodestino = f.nod_codigo
+         inner join dbo.tblubigeos_ubi g on f.ubi_codigo = g.ubi_codigo
+         inner join dbo.tblciudades_ubi h on g.ubi_codigociudad = h.id
+         inner join dbo.tblvehiculos_veh i on a.veh_id = i.veh_id and i.veh_pisos = 2
+         inner join dbo.tblcategorias_cat j on i.cat_id = j.cat_id
+         inner join dbo.tblviajeslugarembarque_vle k on a.via_id = k.via_id
+         inner join dbo.tbllugarembarque_lem l on l.lem_id = k.lem_id and l.nod_codigo = b.nod_codigoorigen
+         inner join dbo.tbllugarembarque_lem m on a.lem_iddesembarque = m.lem_id
+            where 
+            a.evi_codigo = 'PEN'
+            and a.via_ventasinternet = 1
+            and a.cat_id != 7
+            and a.via_fechaviaje =  '08-08-2020'
+
+union all
+select distinct
+a.via_id as itinerarioID
+, a.rut_id as rutaID
+, e.id as origenID
+, c.nod_descripcion as origen
+, h.id as destinoID
+, h.descripcion as destino
+, 1 as piso,j.cat_id as servicioID
+, j.cat_nombre as servicioNombre
+, a.via_precio1 as tarifa
+, convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', a.via_horaviaje)+DATEDIFF(S,'00:00:00', b.rut_tiempoviaje),'00:00:00' ) as time(1))) as horaLlegada 
+, cast(a.via_fechaviaje AS date) AS fechaPartida
+, CAST(dateadd(day, datediff(day,'19000101',a.via_fechaviaje), CAST(a.via_horaviaje as datetime)) + CAST(b.rut_tiempoviaje as datetime) as date) as fechaLlegada
+, a.lem_iddesembarque as agenciaLlegadaID
+, f.nod_descripcion as agenciaLlegada
+, m.lem_descripcion as direccionLlegada
+, lem.lem_id as agenciaPartidaID
+, nod.nod_descripcion as agenciaPartida
+--, convert(varchar(8), cast(a.via_horaviaje AS time)) AS horaPartida
+--,rxn.rxn_tiempoviaje
+, convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', a.via_horaviaje)+DATEDIFF(S,'00:00:00', rxn.rxn_tiempoviaje),'00:00:00' ) as time(1))) AS horaPartida2
+, lem.lem_descripcion as direccion 
+from dbo.tblviajes_via a 
+inner join dbo.tblrutas_rut b on a.rut_id = b.rut_id 
+inner join tblrutasnodos_rxn rxn on a.rut_id=rxn.rut_id
+inner join dbo.tblnodos_nod nod on rxn.nod_codigo = nod.nod_codigo 
+inner join  dbo.tbllugarembarque_lem lem on nod.nod_codigo = lem.nod_codigo
+inner join dbo.tblviajeslugarembarque_vle k on a.via_id = k.via_id 
+inner join  dbo.tbllugarembarque_lem l on l.lem_id = k.lem_id --and l.nod_codigo = b.nod_codigoorigen
+inner join dbo.tblnodos_nod c on l.nod_codigo = c.nod_codigo 
+inner join dbo.tblubigeos_ubi d on c.ubi_codigo = d.ubi_codigo
+inner join dbo.tblciudades_ubi e on d.ubi_codigociudad = e.id
+inner join dbo.tblnodos_nod f on b.nod_codigodestino = f.nod_codigo
+inner join dbo.tblubigeos_ubi g on  f.ubi_codigo = g.ubi_codigo
+inner join dbo.tblciudades_ubi h on  g.ubi_codigociudad = h.id
+inner join dbo.tblvehiculos_veh i on  a.veh_id = i.veh_id
+inner join dbo.tblcategorias_cat j on i.cat_id = j.cat_id
+inner join dbo.tbllugarembarque_lem m on a.lem_iddesembarque = m.lem_id
+where 
+a.evi_codigo = 'PEN'
+and a.via_ventasinternet = 1
+--and l.nod_codigo = b.nod_codigoorigen
+and a.cat_id != 7
+and a.via_fechaviaje = '08-08-2020'
+and convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', (select rxn_tiempoviaje from tblrutasnodos_rxn where nod_codigo=c.nod_codigo AND rut_id=a.rut_id)),cast(a.via_horaviaje as time)) as time)) between '09:00' and '23:30'
+and e.id in (12/*NASCA*/)
+and lem.lem_id in (1009/*NASCA*/)
+
+union all
+select distinct
+a.via_id as itinerarioID
+, a.rut_id as rutaID
+, e.id as origenID
+, c.nod_descripcion as origen
+, h.id as destinoID
+, h.descripcion as destino
+, i.veh_pisos as piso,j.cat_id as servicioID
+, j.cat_nombre as servicioNombre
+, a.via_precio2 as tarifa
+, convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', a.via_horaviaje)+DATEDIFF(S,'00:00:00', b.rut_tiempoviaje),'00:00:00' ) as time(1))) as horaLlegada 
+, cast(a.via_fechaviaje AS date) AS fechaPartida
+, CAST(dateadd(day, datediff(day,'19000101',a.via_fechaviaje), CAST(a.via_horaviaje as datetime)) + CAST(b.rut_tiempoviaje as datetime) as date) as fechaLlegada
+, a.lem_iddesembarque as agenciaLlegadaID
+, f.nod_descripcion as agenciaLlegada
+, m.lem_descripcion as direccionLlegada
+, lem.lem_id as agenciaPartidaID
+, nod.nod_descripcion as agenciaPartida
+--, convert(varchar(8), cast(a.via_horaviaje AS time)) AS horaPartida
+--,rxn.rxn_tiempoviaje
+, convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', a.via_horaviaje)+DATEDIFF(S,'00:00:00', rxn.rxn_tiempoviaje),'00:00:00' ) as time(1))) AS horaPartida2
+, lem.lem_descripcion as direccion 
+from dbo.tblviajes_via a 
+inner join dbo.tblrutas_rut b on a.rut_id = b.rut_id 
+inner join tblrutasnodos_rxn rxn on a.rut_id=rxn.rut_id
+inner join dbo.tblnodos_nod nod on rxn.nod_codigo = nod.nod_codigo 
+inner join  dbo.tbllugarembarque_lem lem on nod.nod_codigo = lem.nod_codigo
+inner join dbo.tblviajeslugarembarque_vle k on a.via_id = k.via_id 
+inner join  dbo.tbllugarembarque_lem l on l.lem_id = k.lem_id --and l.nod_codigo = b.nod_codigoorigen
+inner join dbo.tblnodos_nod c on l.nod_codigo = c.nod_codigo 
+inner join dbo.tblubigeos_ubi d on c.ubi_codigo = d.ubi_codigo
+inner join dbo.tblciudades_ubi e on d.ubi_codigociudad = e.id
+inner join dbo.tblnodos_nod f on b.nod_codigodestino = f.nod_codigo
+inner join dbo.tblubigeos_ubi g on  f.ubi_codigo = g.ubi_codigo
+inner join dbo.tblciudades_ubi h on  g.ubi_codigociudad = h.id
+inner join dbo.tblvehiculos_veh i on  a.veh_id = i.veh_id
+inner join dbo.tblcategorias_cat j on i.cat_id = j.cat_id
+inner join dbo.tbllugarembarque_lem m on a.lem_iddesembarque = m.lem_id
+where 
+a.evi_codigo = 'PEN'
+and a.via_ventasinternet = 1
+--and l.nod_codigo = b.nod_codigoorigen
+and i.veh_pisos = 2
+and a.cat_id != 7
+and a.via_fechaviaje = '08-08-2020'
+and convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', (select rxn_tiempoviaje from tblrutasnodos_rxn where nod_codigo=c.nod_codigo AND rut_id=a.rut_id)),cast(a.via_horaviaje as time)) as time)) between '09:00' and '23:30'
+and e.id in (12/*NASCA*/)
+and lem.lem_id in (1009/*NASCA*/)
+
+*************************************************************
+**08:40:26/7/8/2020*****
+select codigo, codusu  from tblws_keys where '5JNIuHIUH$7898UH768buhk.IHI98yHKLJO8J.Oih7HO.J97UIHKH765F$%n' =  CONVERT(VARCHAR(MAX), DECRYPTBYPASSPHRASE('password', Llave)) and level = 1
+*************************************************************
+**08:40:27/7/8/2020*****
+select 
+      a.via_id as itinerarioID
+      , a.rut_id as rutaID
+      , e.id as origenID
+      , e.descripcion as origen
+      , h.id as destinoID
+      , h.descripcion as destino
+      , 1 as piso,j.cat_id as servicioID
+      , j.cat_nombre as servicioNombre
+      , a.via_precio1 as tarifa
+      , convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', a.via_horaviaje)+DATEDIFF(S,'00:00:00', b.rut_tiempoviaje),'00:00:00' ) as time(1))) as horaLlegada 
+      , cast(a.via_fechaviaje AS date) AS fechaPartida
+      , CAST(dateadd(day, datediff(day,'19000101',a.via_fechaviaje), CAST(a.via_horaviaje as datetime)) + CAST(b.rut_tiempoviaje as datetime) as date) as fechaLlegada
+      , a.lem_iddesembarque as agenciaLlegadaID
+      , f.nod_descripcion as agenciaLlegada
+      , m.lem_descripcion as direccionLlegada
+      , l.lem_id as agenciaPartidaID
+      , c.nod_descripcion as agenciaPartida
+      , convert(varchar(8), cast(a.via_horaviaje AS time)) AS horaPartida
+      , l.lem_descripcion as direccion 
+      from dbo.tblviajes_via a 
+     inner join dbo.tblrutas_rut b on a.rut_id = b.rut_id 
+     inner join dbo.tblnodos_nod c on b.nod_codigoorigen = c.nod_codigo 
+     inner join dbo.tblubigeos_ubi d on c.ubi_codigo = d.ubi_codigo
+     inner join dbo.tblciudades_ubi e on d.ubi_codigociudad = e.id
+    inner join dbo.tblnodos_nod f on b.nod_codigodestino = f.nod_codigo
+     inner join dbo.tblubigeos_ubi g on  f.ubi_codigo = g.ubi_codigo
+     inner join dbo.tblciudades_ubi h on  g.ubi_codigociudad = h.id
+     inner join dbo.tblvehiculos_veh i on  a.veh_id = i.veh_id
+     inner join dbo.tblcategorias_cat j on i.cat_id = j.cat_id
+     inner join dbo.tblviajeslugarembarque_vle k on a.via_id = k.via_id 
+     inner join  dbo.tbllugarembarque_lem l on l.lem_id = k.lem_id and l.nod_codigo = b.nod_codigoorigen
+     inner join dbo.tbllugarembarque_lem m on a.lem_iddesembarque = m.lem_id
+            where 
+            a.evi_codigo = 'PEN'
+            and a.via_ventasinternet = 1
+            and a.cat_id != 7
+            and a.via_fechaviaje = '08-08-2020'
+    
+       union all
+            select  
+            a.via_id as itinerarioID
+            , a.rut_id as rutaID
+            , e.id as origenID
+            , e.descripcion as origen
+            , h.id as destinoID
+            , h.descripcion as destino
+            , i.veh_pisos as piso
+            , j.cat_id as servicioID 
+            , j.cat_nombre as servicioNombre
+            , a.via_precio2 as tarifa
+            , convert(varchar(8) , cast (DATEADD(S,DATEDIFF(S,'00:00:00', a.via_horaviaje)+DATEDIFF(S,'00:00:00', b.rut_tiempoviaje),'00:00:00' ) as time(1))) as horaLlegada 
+            , cast(a.via_fechaviaje AS date) AS fechaPartida
+            , CAST(dateadd(day, datediff(day,'19000101',a.via_fechaviaje), CAST(a.via_horaviaje as datetime)) + CAST(b.rut_tiempoviaje as datetime) as date) as fechaLlegada
+            , a.lem_iddesembarque as agenciaLlegadaID, f.nod_descripcion as agenciaLlegada
+            , m.lem_descripcion as direccionLlegada
+            , l.lem_id as agenciaPartidaID
+            , c.nod_descripcion as agenciaPartida 
+            , convert(varchar(8),cast(a.via_horaviaje AS time)) AS horaPartida
+            , l.lem_descripcion as direccion 
+            from dbo.tblviajes_via a  
+         inner join dbo.tblrutas_rut b on  a.rut_id = b.rut_id
+         inner join dbo.tblnodos_nod c on b.nod_codigoorigen = c.nod_codigo
+         inner join dbo.tblubigeos_ubi d on c.ubi_codigo = d.ubi_codigo
+         inner join dbo.tblciudades_ubi e on d.ubi_codigociudad = e.id
+      inner join dbo.tblnodos_nod f on b.nod_codigodestino = f.nod_codigo
+         inner join dbo.tblubigeos_ubi g on f.ubi_codigo = g.ubi_codigo
+         inner join dbo.tblciudades_ubi h on g.ubi_codigociudad = h.id
+         inner join dbo.tblvehiculos_veh i on a.veh_id = i.veh_id and i.veh_pisos = 2
+         inner join dbo.tblcategorias_cat j on i.cat_id = j.cat_id
+         inner join dbo.tblviajeslugarembarque_vle k on a.via_id = k.via_id
+         inner join dbo.tbllugarembarque_lem l on l.lem_id = k.lem_id and l.nod_codigo = b.nod_codigoorigen
+         inner join dbo.tbllugarembarque_lem m on a.lem_iddesembarque = m.lem_id
+            where 
+            a.evi_codigo = 'PEN'
+            and a.via_ventasinternet = 1
+            and a.cat_id != 7
+            and a.via_fechaviaje =  '08-08-2020'
+
+union all
+select distinct
+a.via_id as itinerarioID
+, a.rut_id as rutaID
+, e.id as origenID
+, c.nod_descripcion as origen
+, h.id as destinoID
+, h.descripcion as destino
+, 1 as piso,j.cat_id as servicioID
+, j.cat_nombre as servicioNombre
+, a.via_precio1 as tarifa
+, convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', a.via_horaviaje)+DATEDIFF(S,'00:00:00', b.rut_tiempoviaje),'00:00:00' ) as time(1))) as horaLlegada 
+, cast(a.via_fechaviaje AS date) AS fechaPartida
+, CAST(dateadd(day, datediff(day,'19000101',a.via_fechaviaje), CAST(a.via_horaviaje as datetime)) + CAST(b.rut_tiempoviaje as datetime) as date) as fechaLlegada
+, a.lem_iddesembarque as agenciaLlegadaID
+, f.nod_descripcion as agenciaLlegada
+, m.lem_descripcion as direccionLlegada
+, lem.lem_id as agenciaPartidaID
+, nod.nod_descripcion as agenciaPartida
+--, convert(varchar(8), cast(a.via_horaviaje AS time)) AS horaPartida
+--,rxn.rxn_tiempoviaje
+, convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', a.via_horaviaje)+DATEDIFF(S,'00:00:00', rxn.rxn_tiempoviaje),'00:00:00' ) as time(1))) AS horaPartida2
+, lem.lem_descripcion as direccion 
+from dbo.tblviajes_via a 
+inner join dbo.tblrutas_rut b on a.rut_id = b.rut_id 
+inner join tblrutasnodos_rxn rxn on a.rut_id=rxn.rut_id
+inner join dbo.tblnodos_nod nod on rxn.nod_codigo = nod.nod_codigo 
+inner join  dbo.tbllugarembarque_lem lem on nod.nod_codigo = lem.nod_codigo
+inner join dbo.tblviajeslugarembarque_vle k on a.via_id = k.via_id 
+inner join  dbo.tbllugarembarque_lem l on l.lem_id = k.lem_id --and l.nod_codigo = b.nod_codigoorigen
+inner join dbo.tblnodos_nod c on l.nod_codigo = c.nod_codigo 
+inner join dbo.tblubigeos_ubi d on c.ubi_codigo = d.ubi_codigo
+inner join dbo.tblciudades_ubi e on d.ubi_codigociudad = e.id
+inner join dbo.tblnodos_nod f on b.nod_codigodestino = f.nod_codigo
+inner join dbo.tblubigeos_ubi g on  f.ubi_codigo = g.ubi_codigo
+inner join dbo.tblciudades_ubi h on  g.ubi_codigociudad = h.id
+inner join dbo.tblvehiculos_veh i on  a.veh_id = i.veh_id
+inner join dbo.tblcategorias_cat j on i.cat_id = j.cat_id
+inner join dbo.tbllugarembarque_lem m on a.lem_iddesembarque = m.lem_id
+where 
+a.evi_codigo = 'PEN'
+and a.via_ventasinternet = 1
+--and l.nod_codigo = b.nod_codigoorigen
+and a.cat_id != 7
+and a.via_fechaviaje = '08-08-2020'
+and convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', (select rxn_tiempoviaje from tblrutasnodos_rxn where nod_codigo=c.nod_codigo AND rut_id=a.rut_id)),cast(a.via_horaviaje as time)) as time)) between '09:00' and '23:30'
+and e.id in (12/*NASCA*/)
+and lem.lem_id in (1009/*NASCA*/)
+
+union all
+select distinct
+a.via_id as itinerarioID
+, a.rut_id as rutaID
+, e.id as origenID
+, c.nod_descripcion as origen
+, h.id as destinoID
+, h.descripcion as destino
+, i.veh_pisos as piso,j.cat_id as servicioID
+, j.cat_nombre as servicioNombre
+, a.via_precio2 as tarifa
+, convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', a.via_horaviaje)+DATEDIFF(S,'00:00:00', b.rut_tiempoviaje),'00:00:00' ) as time(1))) as horaLlegada 
+, cast(a.via_fechaviaje AS date) AS fechaPartida
+, CAST(dateadd(day, datediff(day,'19000101',a.via_fechaviaje), CAST(a.via_horaviaje as datetime)) + CAST(b.rut_tiempoviaje as datetime) as date) as fechaLlegada
+, a.lem_iddesembarque as agenciaLlegadaID
+, f.nod_descripcion as agenciaLlegada
+, m.lem_descripcion as direccionLlegada
+, lem.lem_id as agenciaPartidaID
+, nod.nod_descripcion as agenciaPartida
+--, convert(varchar(8), cast(a.via_horaviaje AS time)) AS horaPartida
+--,rxn.rxn_tiempoviaje
+, convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', a.via_horaviaje)+DATEDIFF(S,'00:00:00', rxn.rxn_tiempoviaje),'00:00:00' ) as time(1))) AS horaPartida2
+, lem.lem_descripcion as direccion 
+from dbo.tblviajes_via a 
+inner join dbo.tblrutas_rut b on a.rut_id = b.rut_id 
+inner join tblrutasnodos_rxn rxn on a.rut_id=rxn.rut_id
+inner join dbo.tblnodos_nod nod on rxn.nod_codigo = nod.nod_codigo 
+inner join  dbo.tbllugarembarque_lem lem on nod.nod_codigo = lem.nod_codigo
+inner join dbo.tblviajeslugarembarque_vle k on a.via_id = k.via_id 
+inner join  dbo.tbllugarembarque_lem l on l.lem_id = k.lem_id --and l.nod_codigo = b.nod_codigoorigen
+inner join dbo.tblnodos_nod c on l.nod_codigo = c.nod_codigo 
+inner join dbo.tblubigeos_ubi d on c.ubi_codigo = d.ubi_codigo
+inner join dbo.tblciudades_ubi e on d.ubi_codigociudad = e.id
+inner join dbo.tblnodos_nod f on b.nod_codigodestino = f.nod_codigo
+inner join dbo.tblubigeos_ubi g on  f.ubi_codigo = g.ubi_codigo
+inner join dbo.tblciudades_ubi h on  g.ubi_codigociudad = h.id
+inner join dbo.tblvehiculos_veh i on  a.veh_id = i.veh_id
+inner join dbo.tblcategorias_cat j on i.cat_id = j.cat_id
+inner join dbo.tbllugarembarque_lem m on a.lem_iddesembarque = m.lem_id
+where 
+a.evi_codigo = 'PEN'
+and a.via_ventasinternet = 1
+--and l.nod_codigo = b.nod_codigoorigen
+and i.veh_pisos = 2
+and a.cat_id != 7
+and a.via_fechaviaje = '08-08-2020'
+and convert(varchar(8),cast(DATEADD(S,DATEDIFF(S,'00:00:00', (select rxn_tiempoviaje from tblrutasnodos_rxn where nod_codigo=c.nod_codigo AND rut_id=a.rut_id)),cast(a.via_horaviaje as time)) as time)) between '09:00' and '23:30'
+and e.id in (12/*NASCA*/)
+and lem.lem_id in (1009/*NASCA*/)
+
+*************************************************************
