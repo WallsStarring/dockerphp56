@@ -5,11 +5,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: website-web-flores
+    container_name: website-web-cruz-del-sur
     image: website-web
     ports:
-      - 8004:80
-      - 8005:81
+      - 8005:80
+      - 8006:81
     links:
       - website-db
     env_file:
@@ -19,7 +19,7 @@ services:
   website-db:
     restart: always
     image: mysql:5.7
-    container_name: website-db-flores
+    container_name: website-db-cruz-del-sur
     #ports:
     #  - 3306:3306
     env_file:
