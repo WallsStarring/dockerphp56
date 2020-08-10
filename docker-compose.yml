@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: website-web
+    container_name: website-web-flores
     image: website-web
     ports:
       - 9000:80
@@ -19,7 +19,7 @@ services:
   website-db:
     restart: always
     image: mysql:5.7
-    container_name: website-db
+    container_name: website-db-flores
     #ports:
     #  - 3306:3306
     env_file:
