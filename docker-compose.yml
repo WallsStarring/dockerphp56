@@ -8,8 +8,8 @@ services:
     container_name: website-web-cruz-del-sur
     image: website-web
     ports:
-      - 8005:80
-      - 8006:81
+      - 8006:80
+      - 8007:81
     links:
       - website-db
     env_file:
