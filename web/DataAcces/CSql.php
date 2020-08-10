@@ -2,7 +2,7 @@
 // Conexion a Base de Datos
 class CSql {
    private $url = "207.244.253.101";
-   private $dbname = "DBCivaPreProduccion";
+   private $dbname = "DBFloresPreProduccion";
    private $user = "sa";
    private $password = "u6gMxE5N8pa4sHoF";
 

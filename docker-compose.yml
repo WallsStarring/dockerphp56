@@ -8,8 +8,8 @@ services:
     container_name: website-web
     image: website-web
     ports:
-      - 8000:80
-      - 8001:81
+      - 9000:80
+      - 9000:81
     links:
       - website-db
     env_file:
