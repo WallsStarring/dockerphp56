@@ -1,10 +1,10 @@
 <?php
 // Conexion a Base de Datos
 class CSql {
-   private $url = "207.244.253.101";
+   private $url = "207.244.254.19";
    private $dbname = "DBCruzDelSurPreProduccion";
    private $user = "sa";
-   private $password = "u6gMxE5N8pa4sHoF";
+   private $password = "Golft0123";
 
    
    public function geturl(){
